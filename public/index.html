@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment Insights Bot</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header class="page-header">
+      <div>
+        <h1>Investment Insights Bot</h1>
+        <p>Your AI-powered investment dashboard with auth, sentiment analysis, portfolio tracking, and a chatbot.</p>
+      </div>
+      <div class="header-actions">
+        <div id="user-welcome" class="user-welcome">Not signed in</div>
+        <button id="logout-button" class="secondary-button hidden">Logout</button>
+      </div>
+    </header>
+
+    <main class="dashboard-grid">
+      <section class="panel auth-panel" id="auth-panel">
+        <h2>Login / Signup</h2>
+        <div class="auth-tabs">
+          <button id="login-tab" class="tab active">Login</button>
+          <button id="signup-tab" class="tab">Signup</button>
+        </div>
+        <form id="auth-form">
+          <label class="auth-name-field hidden">
+            Name
+            <input id="auth-name" type="text" />
+          </label>
+          <label>
+            Email
+            <input id="auth-email" type="email" required />
+          </label>
+          <label>
+            Password
+            <input id="auth-password" type="password" required />
+          </label>
+          <label class="auth-confirm-field hidden">
+            Confirm password
+            <input id="auth-confirm-password" type="password" />
+          </label>
+          <button type="submit">Submit</button>
+          <div id="auth-message" class="form-message"></div>
+        </form>
+      </section>
+
+      <section class="panel form-panel hidden" id="search-panel">
+        <h2>Search stock</h2>
+        <form id="search-form">
+          <label>
+            Ticker symbol
+            <input id="symbol" name="symbol" type="text" placeholder="AAPL or TCS.NS" required />
+            <small class="helper-text">Use .NS / .BO suffix for Indian stocks (for example, TCS.NS or IHCL.NS).</small>
+          </label>
+          <label>
+            Budget
+            <input id="budget" name="budget" type="number" placeholder="1000" min="0" />
+          </label>
+          <label>
+            Risk tolerance
+            <select id="riskTolerance" name="riskTolerance">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <button type="submit">Get recommendation</button>
+        </form>
+      </section>
+
+      <section class="panel portfolio-panel hidden" id="portfolio-panel">
+        <h2>Portfolio tracker</h2>
+        <form id="portfolio-form" class="inline-form">
+          <input id="portfolio-symbol" placeholder="Symbol" type="text" />
+          <input id="portfolio-shares" placeholder="Shares" type="number" min="0" />
+          <input id="portfolio-cost" placeholder="Avg cost" type="number" min="0" step="0.01" />
+          <button type="submit">Add / Update</button>
+        </form>
+        <div id="portfolio-list" class="portfolio-list">Sign in to view portfolio.</div>
+      </section>
+
+
+
+      <section class="panel chat-panel hidden" id="chat-panel">
+        <h2>Chatbot</h2>
+        <div class="chat-box">
+          <div id="chat-messages" class="chat-messages">Ask the bot about a stock or your portfolio.</div>
+          <form id="chat-form" class="chat-form">
+            <input id="chat-question" placeholder="Ask: What is AAPL price?" required />
+            <button type="submit">Ask</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="panel history-panel hidden" id="history-panel">
+        <h2>Recent stock searches</h2>
+        <div id="search-history" class="history-list">Loading history…</div>
+      </section>
+
+      <section class="panel result-panel hidden" id="result-panel">
+        <div class="result-header">
+          <div>
+            <h2 id="result-name"></h2>
+            <p id="result-symbol"></p>
+          </div>
+          <div id="result-action" class="badge"></div>
+        </div>
+
+        <div class="metrics-grid">
+          <div><strong>Price</strong><span id="result-price"></span></div>
+          <div><strong>Change</strong><span id="result-change"></span></div>
+          <div><strong>Range</strong><span id="result-range"></span></div>
+          <div><strong>Market cap</strong><span id="result-marketcap"></span></div>
+          <div><strong>Risk</strong><span id="result-risk"></span></div>
+          <div><strong>Confidence</strong><span id="result-confidence"></span></div>
+          <div><strong>Predicted move</strong><span id="result-predicted"></span></div>
+        </div>
+
+        <div class="chart-card">
+          <canvas id="stock-chart"></canvas>
+        </div>
+
+        <div class="recommendation-card">
+          <h3>Reason</h3>
+          <p id="result-reason"></p>
+        </div>
+
+        <div class="news-sentiment">
+          <h3>News sentiment</h3>
+          <p id="sentiment-summary"></p>
+          <div id="sentiment-articles" class="news-list"></div>
+        </div>
+      </section>
+
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
